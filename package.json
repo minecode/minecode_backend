@@ -10,7 +10,6 @@
     "scripts": {
         "test": "mocha --recursive tests",
         "start": "nodemon index.js --watch server/*",
-        "build": "node ./buildScript"
     },
     "dependencies": {
         "aws-serverless-express": "^3.3.8",
