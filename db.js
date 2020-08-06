@@ -25,7 +25,7 @@ knex.schema
       })
         .then(() => {
           // Log success message
-          console.log('Table \'ScoreUserChallenge\' created')
+          // console.log('Table \'ScoreUserChallenge\' created')
         })
         .catch((error) => {
           console.error(`There was an error creating table: ${error}`)
@@ -33,14 +33,16 @@ knex.schema
     }
   })
   .then(() => {
-    console.log('done')
+    // console.log('done')
   })
   .catch((error) => {
     console.error(`There was an error setting up the database: ${error}`)
   })
 
 knex.select('*').from('ScoreUserChallenge')
-  .then(data => console.log('data:', data))
+  .then(data => {
+    // console.log('data:', data)
+  })
   .catch(err => console.log(err))
 
 knex.schema
@@ -54,7 +56,7 @@ knex.schema
         table.string('imageUrl')
       })
         .then(() => {
-          console.log('Table \'User\' created')
+          // console.log('Table \'User\' created')
         })
         .catch((error) => {
           console.error(`There was an error creating table: ${error}`)
@@ -62,14 +64,16 @@ knex.schema
     }
   })
   .then(() => {
-    console.log('done')
+    // console.log('done')
   })
   .catch((error) => {
     console.error(`There was an error setting up the database: ${error}`)
   })
 
 knex.select('*').from('User')
-  .then(data => console.log('data:', data))
+  .then(data => {
+    // console.log('data:', data)
+  })
   .catch(err => console.log(err))
 
 module.exports = knex
