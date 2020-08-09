@@ -3,6 +3,10 @@ const knex = require('../db')
 const axios = require('axios')
 require('dotenv').config()
 
+function setCache(response) {
+  response.set("Cache-Control", "public, max-age=300, s-maxage=600");
+}
+
 exports.getScore = async (req, res) => {
   knex
     .select('userId', knex.raw('SUM(score) as score'))
@@ -183,21 +187,20 @@ exports.user = async (req, res) => {
 }
 
 exports.getContentsGithub = async (req, res) => {
+  setCache(res)
   await axios({
-    method: "get",
+    method: 'get',
     url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`,
     headers: {
-      Authorization: `Bearer ${process.env.TOKEN}`,
+      Authorization: `token ${process.env.TOKEN}`,
       "Content-Type": "application/json",
       Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-    },
+    }
   })
     .then(userData => {
-      res.send(userData);
+      res.send(userData.data);
     })
     .catch(err => {
-      console.log(`url https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`)
-      console.log(`token ${process.env.TOKEN}`)
-      res.send(`There was an error: ${err}`);
+      res.json({message: `There was an error: ${err}`});
     });
 }
