@@ -1,6 +1,7 @@
 // Import database
 const knex = require('../db')
 const axios = require('axios')
+require('dotenv').config()
 
 exports.getScore = async (req, res) => {
   knex
@@ -182,7 +183,7 @@ exports.user = async (req, res) => {
 }
 
 exports.getContentsGithub = async (req, res) => {
-  axios({
+  await axios({
     method: "get",
     url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`,
     headers: {
@@ -195,6 +196,8 @@ exports.getContentsGithub = async (req, res) => {
       res.send(userData);
     })
     .catch(err => {
-      res.send(`There was an error retrieving User: ${err}`);
+      console.log(`url https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`)
+      console.log(`token ${process.env.TOKEN}`)
+      res.send(`There was an error: ${err}`);
     });
 }
