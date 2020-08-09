@@ -1,5 +1,6 @@
 // Import database
 const knex = require('../db')
+const axios = require('axios')
 
 exports.getScore = async (req, res) => {
   knex
@@ -178,4 +179,22 @@ exports.user = async (req, res) => {
           res.json({ message: `There was an error retrieving User: ${err}` })
         })
     })
+}
+
+exports.getContentsGithub = async (req, res) => {
+  axios({
+    method: "get",
+    url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.selectedChallengeName}/${req.params.userId}/resolution.py`,
+    headers: {
+      Authorization: `Bearer ${process.env.TOKEN}`,
+      "Content-Type": "application/json",
+      Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+    },
+  })
+    .then(userData => {
+      res.send(userData);
+    })
+    .catch(err => {
+      res.send(`There was an error retrieving User: ${err}`);
+    });
 }
