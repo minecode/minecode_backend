@@ -19,7 +19,7 @@ router.get('/:userId', contestsRoutes.getScoreByUser)
 router.get('/list/:userId', contestsRoutes.getListByUser)
 router.get('/:userId/:contestId/', contestsRoutes.getScoreByContestUser)
 router.get('/:userId/:contestId/:challengeId/', contestsRoutes.getScoreByContestChallengeUser)
-router.get("/contents/:selectedChallengeName/:userId", contestsRoutes.getContentsGithub)
+router.get("/contents/:contest/:challenge/:userId", contestsRoutes.getContentsGithub)
 router.post('/:userId/:contestId/:challengeId/:score', contestsRoutes.scoreUserChallenge)
 
 // Export router

@@ -184,7 +184,7 @@ exports.user = async (req, res) => {
 exports.getContentsGithub = async (req, res) => {
   axios({
     method: "get",
-    url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.selectedChallengeName}/${req.params.userId}/resolution.py`,
+    url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`,
     headers: {
       Authorization: `Bearer ${process.env.TOKEN}`,
       "Content-Type": "application/json",
