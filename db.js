@@ -1,13 +1,10 @@
 const path = require('path')
-
-const dbPath = path.resolve(__dirname, 'db/database.sqlite')
+require('dotenv').config()
 
 const knex = require('knex')({
-  client: 'sqlite3',
-  connection: {
-    filename: dbPath
-  },
-  useNullAsDefault: true
+  client: 'pg',
+  connection: process.env.DATABASE_URL,
+  searchPath: ['knex', 'public']
 })
 
 knex.schema
