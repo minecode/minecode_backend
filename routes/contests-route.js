@@ -21,7 +21,7 @@ router.get('/:userId/:contestId/', contestsRoutes.getScoreByContestUser)
 router.get('/:userId/:contestId/:challengeId/', contestsRoutes.getScoreByContestChallengeUser)
 router.get("/contents/:contest/:challenge/:userId", contestsRoutes.getContentsGithub)
 router.post('/:userId/:contestId/:challengeId/:score', contestsRoutes.scoreUserChallenge)
-router.get('/network/git/query/:query', contestsRoutes.getReposGit)
+router.get('/network/git/query/:query', contestsRoutes.getUsersGitQuery)
 router.get('/network/git/user/:user', contestsRoutes.getUserGit)
 router.get('/network/git/readme/:user/:project', contestsRoutes.getReadmeGit)
 
