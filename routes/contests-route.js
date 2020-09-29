@@ -6,7 +6,7 @@ const contestsRoutes = require('../controllers/contests-controller.js')
 
 // Create router
 const router = express.Router()
-router.use(function timeLog (req, res, next) {
+router.use(function timeLog(req, res, next) {
   next()
 })
 router.get('/user', contestsRoutes.getAllUser)
@@ -21,9 +21,9 @@ router.get('/:userId/:contestId/', contestsRoutes.getScoreByContestUser)
 router.get('/:userId/:contestId/:challengeId/', contestsRoutes.getScoreByContestChallengeUser)
 router.get("/contents/:contest/:challenge/:userId", contestsRoutes.getContentsGithub)
 router.post('/:userId/:contestId/:challengeId/:score', contestsRoutes.scoreUserChallenge)
-router.get('/:query', contestsRoutes.getRepos)
-router.get('/:user', contestsRoutes.getUser)
-router.get('/:user/:project', contestsRoutes.getReadme)
+router.get('/network/query/:query', contestsRoutes.getRepos)
+router.get('/network/user/:user', contestsRoutes.getUser)
+router.get('/network/readme/:user/:project', contestsRoutes.getReadme)
 
 // Export router
 module.exports = router
