@@ -232,7 +232,7 @@ exports.getContentsGithub = async (req, res) => {
 }
 
 
-exports.getRepos = async (req, res) => {
+exports.getReposGit = async (req, res) => {
   setCache(res)
   await axios({
       method: 'get',
@@ -253,7 +253,7 @@ exports.getRepos = async (req, res) => {
     });
 }
 
-exports.getUser = async (req, res) => {
+exports.getUserGit = async (req, res) => {
   setCache(res)
   await axios({
       method: 'get',
@@ -274,7 +274,7 @@ exports.getUser = async (req, res) => {
     });
 }
 
-exports.getReadme = async (req, res) => {
+exports.getReadmeGit = async (req, res) => {
   setCache(res)
   await axios({
       method: 'get',
