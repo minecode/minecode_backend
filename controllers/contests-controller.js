@@ -16,7 +16,9 @@ exports.getScore = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`
+      })
     })
 }
 
@@ -30,7 +32,9 @@ exports.getScoreByContest = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`
+      })
     })
 }
 
@@ -45,7 +49,9 @@ exports.getScoreByContestChallenge = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`
+      })
     })
 }
 
@@ -59,7 +65,9 @@ exports.getScoreByUser = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`
+      })
     })
 }
 
@@ -72,7 +80,9 @@ exports.getListByUser = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`
+      })
     })
 }
 
@@ -87,7 +97,9 @@ exports.getScoreByContestUser = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`
+      })
     })
 }
 
@@ -103,7 +115,9 @@ exports.getScoreByContestChallengeUser = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`
+      })
     })
 }
 
@@ -122,12 +136,16 @@ exports.scoreUserChallenge = async (req, res) => {
     .catch(() => {
       knex('ScoreUserChallenge')
         .where('id', req.params.userId + req.params.contestId + req.params.challengeId)
-        .update({ score: req.params.score })
+        .update({
+          score: req.params.score
+        })
         .then(userData => {
           res.json(userData)
         })
         .catch(err => {
-          res.json({ message: `There was an error retrieving ScoreUserChallenge: ${err}` })
+          res.json({
+            message: `There was an error retrieving ScoreUserChallenge: ${err}`
+          })
         })
     })
 }
@@ -140,7 +158,9 @@ exports.getAllUser = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving User: ${err}` })
+      res.json({
+        message: `There was an error retrieving User: ${err}`
+      })
     })
 }
 
@@ -153,7 +173,9 @@ exports.getUser = async (req, res) => {
       res.json(userData)
     })
     .catch(err => {
-      res.json({ message: `There was an error retrieving User: ${err}` })
+      res.json({
+        message: `There was an error retrieving User: ${err}`
+      })
     })
 }
 
@@ -181,7 +203,9 @@ exports.user = async (req, res) => {
           res.json(userData)
         })
         .catch(err => {
-          res.json({ message: `There was an error retrieving User: ${err}` })
+          res.json({
+            message: `There was an error retrieving User: ${err}`
+          })
         })
     })
 }
@@ -189,19 +213,21 @@ exports.user = async (req, res) => {
 exports.getContentsGithub = async (req, res) => {
   setCache(res)
   await axios({
-    method: 'get',
-    url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`,
-    headers: {
-      Authorization: `token ${process.env.TOKEN}`,
-      "Content-Type": "application/json",
-      Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-    }
-  })
+      method: 'get',
+      url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`,
+      headers: {
+        Authorization: `token ${process.env.TOKEN}`,
+        "Content-Type": "application/json",
+        Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+      }
+    })
     .then(userData => {
       res.send(userData.data);
     })
     .catch(err => {
-      res.json({message: `There was an error: ${err}`});
+      res.json({
+        message: `There was an error: ${err}`
+      });
     });
 }
 
@@ -248,7 +274,7 @@ exports.getUser = async (req, res) => {
     });
 }
 
-exports.getUser = async (req, res) => {
+exports.getReadme = async (req, res) => {
   setCache(res)
   await axios({
       method: 'get',
