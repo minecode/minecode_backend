@@ -257,15 +257,10 @@ exports.getUsersGitQuery = async (req, res) => {
 					}
 				}))
 			})
-			let responsesData = []
 			axios.all(listOfFetches)
 				.then(axios.spread((...responses) => {
-					responses.forEach(element => {
-						console.log('push2', element)
-						responsesData.push(element.data)
-					});
+					res.send([].concat([], responses))
 				}))
-				.then(res.send(responsesData))
 		})
 		.catch(err => {
 			res.json({
