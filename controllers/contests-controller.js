@@ -244,7 +244,8 @@ exports.getUsersGitQuery = async (req, res) => {
 			}
 		})
 		.then(userData => {
-			userData.data.items.forEach(async element => {
+            let listOfProjects = []
+            userData.data.items.forEach(async element => {
 				await axios({
 						method: 'get',
 						url: `https://api.github.com/users/${element.login}/repos`,
@@ -255,14 +256,15 @@ exports.getUsersGitQuery = async (req, res) => {
 						}
 					})
 					.then(userData => {
-						res.send(userData.data);
+						listOfProjects.push(userData.data)
 					})
 					.catch(err => {
 						res.json({
 							message: `There was an error: ${err}`
 						});
 					});
-			})
+            })
+            res.send(userData.data);
 		})
 		.catch(err => {
 			res.json({
