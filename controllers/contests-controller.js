@@ -243,31 +243,26 @@ exports.getUsersGitQuery = async (req, res) => {
 				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 			}
 		})
-		.then(async (userData) => {
-			let listOfProjects = []
-			await userData.data.items.forEach(async element => {
-				await axios({
-						method: 'get',
-						url: `https://api.github.com/users/${element.login}/repos`,
-						headers: {
-							Authorization: `token ${process.env.TOKEN}`,
-							"Content-Type": "application/json",
-							Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-						}
-					})
-					.then(userData => {
-						listOfProjects.push(userData.data)
-					})
-					.catch(err => {
-						res.json({
-							message: `There was an error: ${err}`
-						});
+		.then(userData => {
+			let listOfFetches = []
+			userData.data.items.forEach(async element => {
+				listOfFetches.push(axios({
+					method: 'get',
+					url: `https://api.github.com/users/${element.login}/repos`,
+					headers: {
+						Authorization: `token ${process.env.TOKEN}`,
+						"Content-Type": "application/json",
+						Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+					}
+				}))
+				axios.all(listOfFetches).then(axios.spread((...responses) => {
+					res.send(responses)
+				})).catch(err => {
+					res.json({
+						message: `There was an error: ${err}`
 					});
-			}).then(() => {
-					res.send(listOfProjects);
-				}
-
-			)
+				})
+			})
 		})
 		.catch(err => {
 			res.json({
