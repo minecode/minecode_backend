@@ -248,7 +248,7 @@ exports.getUsersGitQuery = async (req, res) => {
 			userData.data.items.forEach(element => {
 				listOfFetches.push(axios({
 					method: 'get',
-					url: `https://api.github.com/users/${element.login}/repos`,
+					url: `https://api.github.com/search/repositories?q=user:${element.login} license:apache-2.0`,
 					headers: {
 						Authorization: `token ${process.env.TOKEN}`,
 						"Content-Type": "application/json",
