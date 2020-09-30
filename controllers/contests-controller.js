@@ -257,7 +257,7 @@ exports.getUsersGitQuery = async (req, res) => {
 				}))
 				axios.all(listOfFetches).then(axios.spread((...responses) => {
                     console.log(responses)
-					res.send(responses)
+					// res.send(responses)
 				})).catch(err => {
 					res.json({
 						message: `There was an error1: ${err}`
