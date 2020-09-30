@@ -255,14 +255,14 @@ exports.getUsersGitQuery = async (req, res) => {
 						Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 					}
 				}))
-				axios.all(listOfFetches).then(axios.spread((...responses) => {
-                    console.log(responses)
-					res.send(responses.data)
-				})).catch(err => {
-					res.json({
-						message: `There was an error1: ${err}`
-					});
-				})
+				axios.all(listOfFetches)
+					.then(axios.spread((...responses) => {
+						let responsesData = []
+						responses.forEach(element => {
+							responsesData.push(element.data)
+						});
+					}))
+					.then(res.send(responsesData))
 			})
 		})
 		.catch(err => {
