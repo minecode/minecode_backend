@@ -246,7 +246,7 @@ exports.getUsersGitQuery = async (req, res) => {
 		.then(userData => {
 			let listOfFetches = []
 			userData.data.items.forEach(async element => {
-                console.log('push', element.login)
+				console.log('push', element.login)
 				listOfFetches.push(axios({
 					method: 'get',
 					url: `https://api.github.com/users/${element.login}/repos`,
@@ -257,15 +257,15 @@ exports.getUsersGitQuery = async (req, res) => {
 					}
 				}))
 			})
-            axios.all(listOfFetches)
-                .then(axios.spread((...responses) => {
-                    let responsesData = []
-                    responses.forEach(element => {
-                        console.log('push2', element)
-                        responsesData.push(element.data)
-                    });
-                }))
-                .then(res.send(responsesData))
+			let responsesData = []
+			axios.all(listOfFetches)
+				.then(axios.spread((...responses) => {
+					responses.forEach(element => {
+						console.log('push2', element)
+						responsesData.push(element.data)
+					});
+				}))
+				.then(res.send(responsesData))
 		})
 		.catch(err => {
 			res.json({
