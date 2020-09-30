@@ -259,7 +259,9 @@ exports.getUsersGitQuery = async (req, res) => {
 			console.log('listOfFetches', listOfFetches)
 			axios.all(listOfFetches)
 				.then(responseArr => {
-					console.log(responseArr)
+					responseArr.forEach(element => {
+						console.log(element.data)						
+					});
 				})
 		})
 		.catch(err => {
