@@ -264,7 +264,7 @@ exports.getUsersGitQuery = async (req, res) => {
 						});
 					});
             })
-            res.send(userData.data);
+            res.send(listOfProjects);
 		})
 		.catch(err => {
 			res.json({
