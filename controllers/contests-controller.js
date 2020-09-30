@@ -260,7 +260,7 @@ exports.getUsersGitQuery = async (req, res) => {
 					res.send(responses)
 				})).catch(err => {
 					res.json({
-						message: `There was an error: ${err}`
+						message: `There was an error1: ${err}`
 					});
 				})
 			})
