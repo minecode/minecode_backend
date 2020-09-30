@@ -243,9 +243,9 @@ exports.getUsersGitQuery = async (req, res) => {
 				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 			}
 		})
-		.then(userData => {
-            let listOfProjects = []
-            userData.data.items.forEach(async element => {
+		.then(async (userData) => {
+			let listOfProjects = []
+			await userData.data.items.forEach(async element => {
 				await axios({
 						method: 'get',
 						url: `https://api.github.com/users/${element.login}/repos`,
@@ -263,8 +263,11 @@ exports.getUsersGitQuery = async (req, res) => {
 							message: `There was an error: ${err}`
 						});
 					});
-            })
-            res.send(listOfProjects);
+			}).then(() => {
+					res.send(listOfProjects);
+				}
+
+			)
 		})
 		.catch(err => {
 			res.json({
