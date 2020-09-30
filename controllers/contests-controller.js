@@ -247,7 +247,6 @@ exports.getUsersGitQuery = async (req, res) => {
   })
     .then((userData) => {
       let listOfFetches = [];
-      console.log("userData", userData.data);
       userData.data.items.forEach((element) => {
         listOfFetches.push(
           axios({
@@ -261,7 +260,6 @@ exports.getUsersGitQuery = async (req, res) => {
           })
         );
       });
-      console.log("listOfFetches", listOfFetches);
       axios.all(listOfFetches).then((responseArr) => {
         let responseArrFinal = [];
         responseArr.forEach((element) => {
