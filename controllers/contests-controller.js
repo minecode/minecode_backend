@@ -263,7 +263,7 @@ exports.getUsersGitQuery = async (req, res) => {
       axios.all(listOfFetches).then((responseArr) => {
         let responseArrFinal = [];
         responseArr.forEach((element) => {
-          responseArrFinal.push(element.data);
+          responseArrFinal = responseArrFinal.concat(element.data);
         });
         res.send(responseArrFinal);
       });
