@@ -265,7 +265,7 @@ exports.getUsersGitQuery = async (req, res) => {
         responseArr.forEach((element) => {
           responseArrFinal = responseArrFinal.concat(element.data.filter((repo) => {return repo.license != null}));
         });
-        res.send(responseArrFinal[0]);
+        res.send(responseArrFinal);
       });
     })
     .catch((err) => {
