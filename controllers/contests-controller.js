@@ -251,7 +251,7 @@ exports.getUsersGitQuery = async (req, res) => {
         listOfFetches.push(
           axios({
             method: "get",
-            url: `https://api.github.com/search/repositories?q=user:${element.login} license:apache-2.0`,
+            url: `https://api.github.com/users/${element.login}/repos`,
             headers: {
               Authorization: `token ${process.env.TOKEN}`,
               "Content-Type": "application/json",
