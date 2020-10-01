@@ -263,7 +263,7 @@ exports.getUsersGitQuery = async (req, res) => {
       axios.all(listOfFetches).then((responseArr) => {
         let responseArrFinal = [];
         responseArr.forEach((element) => {
-          responseArrFinal = responseArrFinal.concat(element.data.filter((repo) => {return repo.license != null});
+          responseArrFinal = responseArrFinal.concat(element.data.filter((repo) => {return repo.license != null}));
         });
         res.send(responseArrFinal);
       });
