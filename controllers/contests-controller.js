@@ -262,67 +262,67 @@ exports.getUsersGitQuery = async (req, res) => {
     .then(
       axios.spread((...responses) => {
         console.log(responses);
-        let listOfFetches = [];
+        // let listOfFetches = [];
 
-        //Get repos for github users
-        responses[0].data.items.forEach((element) => {
-          console.log("Github user", element.login);
-          listOfFetches.push(
-            axios({
-              method: "get",
-              url: `https://api.github.com/users/${element.login}/repos`,
-              headers: {
-                Authorization: `token ${process.env.TOKEN}`,
-                "Content-Type": "application/json",
-                Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-              },
-            })
-          );
-        });
+        // //Get repos for github users
+        // responses[0].data.items.forEach((element) => {
+        //   console.log("Github user", element.login);
+        //   listOfFetches.push(
+        //     axios({
+        //       method: "get",
+        //       url: `https://api.github.com/users/${element.login}/repos`,
+        //       headers: {
+        //         Authorization: `token ${process.env.TOKEN}`,
+        //         "Content-Type": "application/json",
+        //         Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+        //       },
+        //     })
+        //   );
+        // });
 
-        //Get projects for gitlab users
-        responses[1].data.forEach(async (element) => {
-          console.log("Gitlab user", element.id);
-          await axios({
-            method: "get",
-            url: `https://gitlab.com/api/v4/users/${element.id}/projects`,
-            headers: {
-              "PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
-              "Content-Type": "application/json",
-              Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-            },
-            //Get project details for gitlab user projects
-          }).then((project) => {
-            console.log("Gitlab project", project.id);
-            listOfFetches.push(
-              axios({
-                method: "get",
-                url: `https://gitlab.com/api/v4/users/${element.id}/projects/${project.id}`,
-                headers: {
-                  "PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
-                  "Content-Type": "application/json",
-                  Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-                },
-              })
-            );
-          });
-        });
+        // //Get projects for gitlab users
+        // responses[1].data.forEach(async (element) => {
+        //   console.log("Gitlab user", element.id);
+        //   await axios({
+        //     method: "get",
+        //     url: `https://gitlab.com/api/v4/users/${element.id}/projects`,
+        //     headers: {
+        //       "PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+        //       "Content-Type": "application/json",
+        //       Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+        //     },
+        //     //Get project details for gitlab user projects
+        //   }).then((project) => {
+        //     console.log("Gitlab project", project.id);
+        //     listOfFetches.push(
+        //       axios({
+        //         method: "get",
+        //         url: `https://gitlab.com/api/v4/users/${element.id}/projects/${project.id}`,
+        //         headers: {
+        //           "PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+        //           "Content-Type": "application/json",
+        //           Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+        //         },
+        //       })
+        //     );
+        //   });
+        // });
 
-        axios.all(listOfFetches).then(
-          axios.spread((...responseArr) => {
-            let responseArrFinal = [];
-            responseArr.forEach((element) => {
-              responseArrFinal = responseArrFinal.concat(
-                element.data.filter((repo) => {
-                  return (
-                    repo.license != null && repo.license.key == "apache-2.0"
-                  );
-                })
-              );
-            });
-            res.send(responseArrFinal);
-          })
-        );
+        // axios.all(listOfFetches).then(
+        //   axios.spread((...responseArr) => {
+        //     let responseArrFinal = [];
+        //     responseArr.forEach((element) => {
+        //       responseArrFinal = responseArrFinal.concat(
+        //         element.data.filter((repo) => {
+        //           return (
+        //             repo.license != null && repo.license.key == "apache-2.0"
+        //           );
+        //         })
+        //       );
+        //     });
+        //     res.send(responseArrFinal);
+        //   })
+        // );
       })
     )
     .catch((err) => {
