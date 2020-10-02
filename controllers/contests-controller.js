@@ -5,11 +5,11 @@ function setCache(response) {
 	response.set("Cache-Control", "public, max-age=300, s-maxage=600");
 }
 
-exports.getUsersGitQuery = async (req, res) => {
+exports.getGitReposByLocation = async (req, res) => {
 	setCache(res);
 	await axios({
 			method: "get",
-			url: `https://api.github.com/search/users?q=location:${req.params.query}`,
+			url: `https://api.github.com/search/users?q=location:${req.params.location}`,
 			headers: {
 				Authorization: `token ${process.env.TOKEN}`,
 				"Content-Type": "application/json",
