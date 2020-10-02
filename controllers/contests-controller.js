@@ -254,32 +254,52 @@ exports.getUsersGitQuery = async (req, res) => {
 			},
 		})])
 		.then(axios.spread((...responses) => {
-            console.log(responses[0])
-            console.log(responses[1])
-            // use/access the results 
-			// let listOfFetches = [];
-			// userData.data.items.forEach((element) => {
-			// 	listOfFetches.push(
-			// 		axios({
-			// 			method: "get",
-			// 			url: `https://api.github.com/users/${element.login}/repos`,
-			// 			headers: {
-			// 				Authorization: `token ${process.env.TOKEN}`,
-			// 				"Content-Type": "application/json",
-			// 				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			// 			},
-			// 		})
-			// 	);
-			// });
-			// axios.all(listOfFetches).then((responseArr) => {
-			// 	let responseArrFinal = [];
-			// 	responseArr.forEach((element) => {
-			// 		responseArrFinal = responseArrFinal.concat(element.data.filter((repo) => {
-			// 			return repo.license != null && repo.license.key == 'apache-2.0'
-			// 		}));
-			// 	});
-			// 	res.send(responseArrFinal);
-			// });
+			let listOfFetches = [];
+			responses[0].data.items.forEach((element) => {
+				listOfFetches.push(
+					axios({
+						method: "get",
+						url: `https://api.github.com/users/${element.login}/repos`,
+						headers: {
+							Authorization: `token ${process.env.TOKEN}`,
+							"Content-Type": "application/json",
+							Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+						},
+					})
+				);
+			});
+			responses[1].data.forEach((element) => {
+				await axios({
+					method: "get",
+					url: `https://gitlab.com/api/v4/users/${element.username}/projects`,
+					headers: {
+						"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+						"Content-Type": "application/json",
+						Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+					},
+				}).then((projects) => {
+					listOfFetches.push(
+						axios({
+							method: "get",
+							url: `https://gitlab.com/api/v4/users/${element.username}/projects/${projects}`,
+							headers: {
+								"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+								"Content-Type": "application/json",
+								Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+							},
+						})
+					)
+				})
+			})
+			axios.all(listOfFetches).then(axios.spread((...responseArr) => {
+				let responseArrFinal = [];
+				responseArr.forEach((element) => {
+					responseArrFinal = responseArrFinal.concat(element.data.filter((repo) => {
+						return repo.license != null && repo.license.key == 'apache-2.0'
+					}));
+				});
+				res.send(responseArrFinal);
+			}));
 		}))
 		.catch((err) => {
 			res.json({
