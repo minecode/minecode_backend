@@ -261,7 +261,6 @@ exports.getUsersGitQuery = async (req, res) => {
 		])
 		.then(
 			axios.spread((...responses) => {
-				console.log(responses);
 				let listOfFetches = [];
 
 				// //Get repos for github users
@@ -283,7 +282,6 @@ exports.getUsersGitQuery = async (req, res) => {
 				//Get projects for gitlab users
 				let listOfUserProjects = []
 				responses[0].data.forEach((element) => {
-					console.log("Gitlab user", element.id);
 					listOfUserProjects.push(axios({
 						method: "get",
 						url: `https://gitlab.com/api/v4/users/${element.id}/projects`,
