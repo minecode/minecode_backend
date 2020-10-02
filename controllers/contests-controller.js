@@ -238,98 +238,47 @@ exports.getUsersGitQuery = async (req, res) => {
 	setCache(res);
 
 	//Get users in github and gitlab
-	await axios
-		.all([
-			// axios({
-			// 	method: "get",
-			// 	url: `https://api.github.com/search/users?q=location:${req.params.query}`,
-			// 	headers: {
-			// 		Authorization: `token ${process.env.TOKEN}`,
-			// 		"Content-Type": "application/json",
-			// 		Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			// 	},
-			// }),
-			axios({
-				method: "get",
-				url: `https://gitlab.com/api/v4/users?location=${req.params.query}&&per_page=100`,
-				headers: {
-					"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
-					"Content-Type": "application/json",
-					Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-				},
-			}),
-		])
-		.then(
-			axios.spread((...responses) => {
-				let listOfFetches = [];
-
-				// //Get repos for github users
-				// responses[0].data.items.forEach((element) => {
-				// 	console.log("Github user", element.login);
-				// 	listOfFetches.push(
-				// 		axios({
-				// 			method: "get",
-				// 			url: `https://api.github.com/users/${element.login}/repos`,
-				// 			headers: {
-				// 				Authorization: `token ${process.env.TOKEN}`,
-				// 				"Content-Type": "application/json",
-				// 				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-				// 			},
-				// 		})
-				// 	);
-				// });
-
-				//Get projects for gitlab users
-				let listOfUserProjects = []
-				responses[0].data.forEach((element) => {
-					listOfUserProjects.push(axios({
+	await axios({
+			method: "get",
+			url: `https://api.github.com/search/users?q=location:${req.params.query}`,
+			headers: {
+				Authorization: `token ${process.env.TOKEN}`,
+				"Content-Type": "application/json",
+				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+			},
+		}).then((responses) => {
+			let listOfFetches = [];
+			//Get repos for github users
+			responses.data.items.forEach((element) => {
+				console.log("Github user", element.login);
+				listOfFetches.push(
+					axios({
 						method: "get",
-						url: `https://gitlab.com/api/v4/users/${element.id}/projects`,
+						url: `https://api.github.com/users/${element.login}/repos`,
 						headers: {
-							"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+							Authorization: `token ${process.env.TOKEN}`,
 							"Content-Type": "application/json",
 							Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 						},
-						//Get project details for gitlab user projects
-					}))
-				});
-				axios.all(listOfUserProjects).then(axios.spread((...projects) => {
-					console.log(projects)
-					projects.forEach((project) => {
-						console.log("Gitlab project", project);
-						console.log("Gitlab id project", project.id);
-						console.log("Gitlab id owner project", project.owner.id);
-						listOfFetches.push(
-							axios({
-								method: "get",
-								url: `https://gitlab.com/api/v4/users/${project.owner.id}/projects/${project.id}`,
-								headers: {
-									"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
-									"Content-Type": "application/json",
-									Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-								},
-							})
-						);
-					})
-				}));
-
-				axios.all(listOfFetches).then(
-					axios.spread((...responseArr) => {
-						let responseArrFinal = [];
-						responseArr.forEach((element) => {
-							responseArrFinal = responseArrFinal.concat(
-								element.data.filter((repo) => {
-									return (
-										repo.license != null && repo.license.key == "apache-2.0"
-									);
-								})
-							);
-						});
-						res.send(responseArrFinal);
 					})
 				);
-			})
-		)
+			});
+			axios.all(listOfFetches).then(
+				axios.spread((...responseArr) => {
+					let responseArrFinal = [];
+					responseArr.forEach((element) => {
+						responseArrFinal = responseArrFinal.concat(
+							element.data.filter((repo) => {
+								return (
+									repo.license != null && repo.license.key == "apache-2.0"
+								);
+							})
+						);
+					});
+					res.send(responseArrFinal);
+				})
+			);
+		})
 		.catch((err) => {
 			res.json({
 				message: `There was an error: ${err}`,
