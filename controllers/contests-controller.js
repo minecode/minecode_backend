@@ -251,7 +251,7 @@ exports.getUsersGitQuery = async (req, res) => {
 			method: "get",
 			url: `https://gitlab.com/api/v4/users?location=${req.params.query}`,
 			headers: {
-				Authorization: `token ${process.env.TOKEN_2}`,
+				"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
 				"Content-Type": "application/json",
 				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 			},
