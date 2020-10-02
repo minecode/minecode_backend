@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 // Implement books route
-app.use('/contests', contestsRoutes)
+app.use('/v1', contestsRoutes)
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {
