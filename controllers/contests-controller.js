@@ -240,24 +240,24 @@ exports.getUsersGitQuery = async (req, res) => {
 	//Get users in github and gitlab
 	await axios
 		.all([
-			axios({
-				method: "get",
-				url: `https://api.github.com/search/users?q=location:${req.params.query}`,
-				headers: {
-					Authorization: `token ${process.env.TOKEN}`,
-					"Content-Type": "application/json",
-					Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-				},
-			}),
 			// axios({
 			// 	method: "get",
-			// 	url: `https://gitlab.com/api/v4/users?location=${req.params.query}`,
+			// 	url: `https://api.github.com/search/users?q=location:${req.params.query}`,
 			// 	headers: {
-			// 		"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+			// 		Authorization: `token ${process.env.TOKEN}`,
 			// 		"Content-Type": "application/json",
 			// 		Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 			// 	},
 			// }),
+			axios({
+				method: "get",
+				url: `https://gitlab.com/api/v4/users?location=${req.params.query}`,
+				headers: {
+					"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+					"Content-Type": "application/json",
+					Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+				},
+			}),
 		])
 		.then(
 			axios.spread((...responses) => {
