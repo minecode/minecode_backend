@@ -268,7 +268,7 @@ exports.getUsersGitQuery = async (req, res) => {
 					})
 				);
 			});
-			responses[1].data.forEach((element) => {
+			responses[1].data.forEach(async (element) => {
 				await axios({
 					method: "get",
 					url: `https://gitlab.com/api/v4/users/${element.username}/projects`,
