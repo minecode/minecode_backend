@@ -4,369 +4,391 @@ const axios = require("axios");
 require("dotenv").config();
 
 function setCache(response) {
-	response.set("Cache-Control", "public, max-age=300, s-maxage=600");
+  response.set("Cache-Control", "public, max-age=300, s-maxage=600");
 }
 
 exports.getScore = async (req, res) => {
-	knex
-		.select("userId", knex.raw("SUM(score) as score"))
-		.from("ScoreUserChallenge")
-		.groupBy("userId")
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-			});
-		});
+  knex
+    .select("userId", knex.raw("SUM(score) as score"))
+    .from("ScoreUserChallenge")
+    .groupBy("userId")
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+      });
+    });
 };
 
 exports.getScoreByContest = async (req, res) => {
-	knex
-		.select("userId", knex.raw("SUM(score) as score"))
-		.from("ScoreUserChallenge")
-		.groupBy("userId")
-		.where("contestId", req.params.contestId)
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-			});
-		});
+  knex
+    .select("userId", knex.raw("SUM(score) as score"))
+    .from("ScoreUserChallenge")
+    .groupBy("userId")
+    .where("contestId", req.params.contestId)
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+      });
+    });
 };
 
 exports.getScoreByContestChallenge = async (req, res) => {
-	knex
-		.select("userId", knex.raw("SUM(score) as score"))
-		.from("ScoreUserChallenge")
-		.groupBy("userId")
-		.where("contestId", req.params.contestId)
-		.where("challengeId", req.params.challengeId)
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-			});
-		});
+  knex
+    .select("userId", knex.raw("SUM(score) as score"))
+    .from("ScoreUserChallenge")
+    .groupBy("userId")
+    .where("contestId", req.params.contestId)
+    .where("challengeId", req.params.challengeId)
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+      });
+    });
 };
 
 exports.getScoreByUser = async (req, res) => {
-	knex
-		.select(knex.raw("SUM(score)  as score"))
-		.from("ScoreUserChallenge")
-		.groupBy("userId")
-		.where("userId", req.params.userId)
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-			});
-		});
+  knex
+    .select(knex.raw("SUM(score)  as score"))
+    .from("ScoreUserChallenge")
+    .groupBy("userId")
+    .where("userId", req.params.userId)
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+      });
+    });
 };
 
 exports.getListByUser = async (req, res) => {
-	knex
-		.select(knex.raw("*"))
-		.from("ScoreUserChallenge")
-		.where("userId", req.params.userId)
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-			});
-		});
+  knex
+    .select(knex.raw("*"))
+    .from("ScoreUserChallenge")
+    .where("userId", req.params.userId)
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+      });
+    });
 };
 
 exports.getScoreByContestUser = async (req, res) => {
-	knex
-		.select(knex.raw("SUM(score)  as score, COUNT(score) as number"))
-		.from("ScoreUserChallenge")
-		.groupBy("userId")
-		.where("userId", req.params.userId)
-		.where("contestId", req.params.contestId)
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-			});
-		});
+  knex
+    .select(knex.raw("SUM(score)  as score, COUNT(score) as number"))
+    .from("ScoreUserChallenge")
+    .groupBy("userId")
+    .where("userId", req.params.userId)
+    .where("contestId", req.params.contestId)
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+      });
+    });
 };
 
 exports.getScoreByContestChallengeUser = async (req, res) => {
-	knex
-		.select(knex.raw("SUM(score)  as score"))
-		.from("ScoreUserChallenge")
-		.groupBy("userId")
-		.where("userId", req.params.userId)
-		.where("contestId", req.params.contestId)
-		.where("challengeId", req.params.challengeId)
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-			});
-		});
+  knex
+    .select(knex.raw("SUM(score)  as score"))
+    .from("ScoreUserChallenge")
+    .groupBy("userId")
+    .where("userId", req.params.userId)
+    .where("contestId", req.params.contestId)
+    .where("challengeId", req.params.challengeId)
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+      });
+    });
 };
 
 exports.scoreUserChallenge = async (req, res) => {
-	knex("ScoreUserChallenge")
-		.insert({
-			id: req.params.userId + req.params.contestId + req.params.challengeId,
-			userId: req.params.userId,
-			contestId: req.params.contestId,
-			challengeId: req.params.challengeId,
-			score: req.params.score,
-		})
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch(() => {
-			knex("ScoreUserChallenge")
-				.where(
-					"id",
-					req.params.userId + req.params.contestId + req.params.challengeId
-				)
-				.update({
-					score: req.params.score,
-				})
-				.then((userData) => {
-					res.json(userData);
-				})
-				.catch((err) => {
-					res.json({
-						message: `There was an error retrieving ScoreUserChallenge: ${err}`,
-					});
-				});
-		});
+  knex("ScoreUserChallenge")
+    .insert({
+      id: req.params.userId + req.params.contestId + req.params.challengeId,
+      userId: req.params.userId,
+      contestId: req.params.contestId,
+      challengeId: req.params.challengeId,
+      score: req.params.score,
+    })
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch(() => {
+      knex("ScoreUserChallenge")
+        .where(
+          "id",
+          req.params.userId + req.params.contestId + req.params.challengeId
+        )
+        .update({
+          score: req.params.score,
+        })
+        .then((userData) => {
+          res.json(userData);
+        })
+        .catch((err) => {
+          res.json({
+            message: `There was an error retrieving ScoreUserChallenge: ${err}`,
+          });
+        });
+    });
 };
 
 exports.getAllUser = async (req, res) => {
-	knex
-		.select("*")
-		.from("User")
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving User: ${err}`,
-			});
-		});
+  knex
+    .select("*")
+    .from("User")
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving User: ${err}`,
+      });
+    });
 };
 
 exports.getUser = async (req, res) => {
-	knex
-		.select("*")
-		.from("User")
-		.where("userId", req.params.userId)
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error retrieving User: ${err}`,
-			});
-		});
+  knex
+    .select("*")
+    .from("User")
+    .where("userId", req.params.userId)
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error retrieving User: ${err}`,
+      });
+    });
 };
 
 exports.user = async (req, res) => {
-	knex("User")
-		.insert({
-			userId: req.params.userId,
-			firstName: req.params.firstName,
-			lastName: req.params.lastName,
-			imageUrl: req.params.imageUrl,
-		})
-		.then((userData) => {
-			res.json(userData);
-		})
-		.catch(() => {
-			knex("User")
-				.where("userId", req.params.userId)
-				.update({
-					firstName: req.params.firstName,
-					lastName: req.params.lastName,
-					imageUrl: req.params.imageUrl,
-					updatedAt: knex.fn.now(),
-				})
-				.then((userData) => {
-					res.json(userData);
-				})
-				.catch((err) => {
-					res.json({
-						message: `There was an error retrieving User: ${err}`,
-					});
-				});
-		});
+  knex("User")
+    .insert({
+      userId: req.params.userId,
+      firstName: req.params.firstName,
+      lastName: req.params.lastName,
+      imageUrl: req.params.imageUrl,
+    })
+    .then((userData) => {
+      res.json(userData);
+    })
+    .catch(() => {
+      knex("User")
+        .where("userId", req.params.userId)
+        .update({
+          firstName: req.params.firstName,
+          lastName: req.params.lastName,
+          imageUrl: req.params.imageUrl,
+          updatedAt: knex.fn.now(),
+        })
+        .then((userData) => {
+          res.json(userData);
+        })
+        .catch((err) => {
+          res.json({
+            message: `There was an error retrieving User: ${err}`,
+          });
+        });
+    });
 };
 
 exports.getContentsGithub = async (req, res) => {
-	setCache(res);
-	await axios({
-			method: "get",
-			url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`,
-			headers: {
-				Authorization: `token ${process.env.TOKEN}`,
-				"Content-Type": "application/json",
-				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			},
-		})
-		.then((userData) => {
-			res.send(userData.data);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error: ${err}`,
-			});
-		});
+  setCache(res);
+  await axios({
+    method: "get",
+    url: `https://api.github.com/repos/minecode/code_contest_responses/contents/${req.params.contest}/${req.params.challenge}/${req.params.userId}/resolution.py`,
+    headers: {
+      Authorization: `token ${process.env.TOKEN}`,
+      "Content-Type": "application/json",
+      Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+    },
+  })
+    .then((userData) => {
+      res.send(userData.data);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error: ${err}`,
+      });
+    });
 };
 
 exports.getUsersGitQuery = async (req, res) => {
-	setCache(res);
-	await axios.all([axios({
-			method: "get",
-			url: `https://api.github.com/search/users?q=location:${req.params.query}`,
-			headers: {
-				Authorization: `token ${process.env.TOKEN}`,
-				"Content-Type": "application/json",
-				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			},
-		}), axios({
-			method: "get",
-			url: `https://gitlab.com/api/v4/users?location=${req.params.query}`,
-			headers: {
-				"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
-				"Content-Type": "application/json",
-				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			},
-		})])
-		.then(axios.spread((...responses) => {
-			let listOfFetches = [];
-			responses[0].data.items.forEach((element) => {
-				listOfFetches.push(
-					axios({
-						method: "get",
-						url: `https://api.github.com/users/${element.login}/repos`,
-						headers: {
-							Authorization: `token ${process.env.TOKEN}`,
-							"Content-Type": "application/json",
-							Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-						},
-					})
-				);
-			});
-			responses[1].data.forEach(async (element) => {
-				await axios({
-					method: "get",
-					url: `https://gitlab.com/api/v4/users/${element.username}/projects`,
-					headers: {
-						"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
-						"Content-Type": "application/json",
-						Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-					},
-				}).then((projects) => {
-					listOfFetches.push(
-						axios({
-							method: "get",
-							url: `https://gitlab.com/api/v4/users/${element.username}/projects/${projects}`,
-							headers: {
-								"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
-								"Content-Type": "application/json",
-								Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-							},
-						})
-					)
-				})
-			})
-			axios.all(listOfFetches).then(axios.spread((...responseArr) => {
-				let responseArrFinal = [];
-				responseArr.forEach((element) => {
-					responseArrFinal = responseArrFinal.concat(element.data.filter((repo) => {
-						return repo.license != null && repo.license.key == 'apache-2.0'
-					}));
-				});
-				res.send(responseArrFinal);
-			}));
-		}))
-		.catch((err) => {
-			res.json({
-				message: `There was an error: ${err}`,
-			});
-		});
+  setCache(res);
+
+  //Get users in github and gitlab
+  await axios
+    .all([
+      axios({
+        method: "get",
+        url: `https://api.github.com/search/users?q=location:${req.params.query}`,
+        headers: {
+          Authorization: `token ${process.env.TOKEN}`,
+          "Content-Type": "application/json",
+          Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+        },
+      }),
+      axios({
+        method: "get",
+        url: `https://gitlab.com/api/v4/users?location=${req.params.query}`,
+        headers: {
+          "PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+          "Content-Type": "application/json",
+          Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+        },
+      }),
+    ])
+    .then(
+      axios.spread((...responses) => {
+        let listOfFetches = [];
+
+        //Get repos for github users
+        responses[0].data.items.forEach((element) => {
+          console.log("Github user", element.login);
+          listOfFetches.push(
+            axios({
+              method: "get",
+              url: `https://api.github.com/users/${element.login}/repos`,
+              headers: {
+                Authorization: `token ${process.env.TOKEN}`,
+                "Content-Type": "application/json",
+                Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+              },
+            })
+          );
+        });
+
+        //Get projects for gitlab users
+        responses[1].data.forEach(async (element) => {
+          console.log("Gitlab user", element.id);
+          await axios({
+            method: "get",
+            url: `https://gitlab.com/api/v4/users/${element.id}/projects`,
+            headers: {
+              "PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+              "Content-Type": "application/json",
+              Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+            },
+            //Get project details for gitlab user projects
+          }).then((projects) => {
+            console.log("Gitlab project", projects.id);
+            listOfFetches.push(
+              axios({
+                method: "get",
+                url: `https://gitlab.com/api/v4/users/${element.id}/projects/${projects.id}`,
+                headers: {
+                  "PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
+                  "Content-Type": "application/json",
+                  Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+                },
+              })
+            );
+          });
+        });
+        axios.all(listOfFetches).then(
+          axios.spread((...responseArr) => {
+            let responseArrFinal = [];
+            responseArr.forEach((element) => {
+              responseArrFinal = responseArrFinal.concat(
+                element.data.filter((repo) => {
+                  return (
+                    repo.license != null && repo.license.key == "apache-2.0"
+                  );
+                })
+              );
+            });
+            res.send(responseArrFinal);
+          })
+        );
+      })
+    )
+    .catch((err) => {
+      res.json({
+        message: `There was an error: ${err}`,
+      });
+    });
 };
 
 exports.getUserGit = async (req, res) => {
-	setCache(res);
-	await axios({
-			method: "get",
-			url: `https://api.github.com/users/${req.params.user}`,
-			headers: {
-				Authorization: `token ${process.env.TOKEN}`,
-				"Content-Type": "application/json",
-				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			},
-		})
-		.then((userData) => {
-			res.send(userData.data);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error: ${err}`,
-			});
-		});
+  setCache(res);
+  await axios({
+    method: "get",
+    url: `https://api.github.com/users/${req.params.user}`,
+    headers: {
+      Authorization: `token ${process.env.TOKEN}`,
+      "Content-Type": "application/json",
+      Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+    },
+  })
+    .then((userData) => {
+      res.send(userData.data);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error: ${err}`,
+      });
+    });
 };
 
 exports.getReadmeGit = async (req, res) => {
-	setCache(res);
-	await axios({
-			method: "get",
-			url: `https://api.github.com/repos/${req.params.user}/${req.params.project}/readme`,
-			headers: {
-				Authorization: `token ${process.env.TOKEN}`,
-				"Content-Type": "application/json",
-				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			},
-		})
-		.then((userData) => {
-			res.send(userData.data);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error: ${err}`,
-			});
-		});
+  setCache(res);
+  await axios({
+    method: "get",
+    url: `https://api.github.com/repos/${req.params.user}/${req.params.project}/readme`,
+    headers: {
+      Authorization: `token ${process.env.TOKEN}`,
+      "Content-Type": "application/json",
+      Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+    },
+  })
+    .then((userData) => {
+      res.send(userData.data);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error: ${err}`,
+      });
+    });
 };
 
 exports.getReposUserGit = async (req, res) => {
-	setCache(res);
-	await axios({
-			method: "get",
-			url: `https://api.github.com/users/${req.params.user}/repos`,
-			headers: {
-				Authorization: `token ${process.env.TOKEN}`,
-				"Content-Type": "application/json",
-				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
-			},
-		})
-		.then((userData) => {
-			res.send(userData.data);
-		})
-		.catch((err) => {
-			res.json({
-				message: `There was an error: ${err}`,
-			});
-		});
+  setCache(res);
+  await axios({
+    method: "get",
+    url: `https://api.github.com/users/${req.params.user}/repos`,
+    headers: {
+      Authorization: `token ${process.env.TOKEN}`,
+      "Content-Type": "application/json",
+      Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+    },
+  })
+    .then((userData) => {
+      res.send(userData.data);
+    })
+    .catch((err) => {
+      res.json({
+        message: `There was an error: ${err}`,
+      });
+    });
 };
