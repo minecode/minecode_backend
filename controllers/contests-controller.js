@@ -236,6 +236,9 @@ exports.getContentsGithub = async (req, res) => {
 
 exports.getUsersGitQuery = async (req, res) => {
 	setCache(res);
+			console.log('TOKEN', process.env.TOKEN)
+		console.log('TOKEN_2', process.env.TOKEN_2)
+
 	await axios.all([axios({
 			method: "get",
 			url: `https://api.github.com/search/users?q=location:${req.params.query}`,
@@ -254,7 +257,10 @@ exports.getUsersGitQuery = async (req, res) => {
 			},
 		})])
 		.then((userData) => {
-            console.log(userData)
+		console.log('TOKEN', process.env.TOKEN)
+		console.log('TOKEN_2', process.env.TOKEN_2)
+		    console.log(userData)
+			res.send(userData)
 			// let listOfFetches = [];
 			// userData.data.items.forEach((element) => {
 			// 	listOfFetches.push(
