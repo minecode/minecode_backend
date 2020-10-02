@@ -61,7 +61,7 @@ exports.getContributorsByRepo = async (req, res) => {
 			},
 		})
 		.then((userData) => {
-			res.send(userData)
+			res.send(userData.data)
 		})
 		.catch((err) => {
 			res.json({
