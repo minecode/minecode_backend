@@ -280,7 +280,7 @@ exports.getUsersGitQuery = async (req, res) => {
 			// 	});
 			// 	res.send(responseArrFinal);
 			// });
-		})
+		}))
 		.catch((err) => {
 			res.json({
 				message: `There was an error: ${err}`,
