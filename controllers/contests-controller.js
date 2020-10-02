@@ -238,7 +238,7 @@ exports.getUsersGitQuery = async (req, res) => {
 	setCache(res);
 	await axios({
 			method: "get",
-			url: `https://api.github.com/search/users?q=${req.params.query}`,
+			url: `https://api.github.com/search/users?q=location:${req.params.query}`,
 			headers: {
 				Authorization: `token ${process.env.TOKEN}`,
 				"Content-Type": "application/json",
