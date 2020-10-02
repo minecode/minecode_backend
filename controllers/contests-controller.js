@@ -281,9 +281,10 @@ exports.getUsersGitQuery = async (req, res) => {
 				// });
 
 				//Get projects for gitlab users
-				responses[0].data.forEach(async (element) => {
+				let listOfUserProjects = []
+				responses[0].data.forEach((element) => {
 					console.log("Gitlab user", element.id);
-					await axios({
+					listOfUserProjects.push(axios({
 						method: "get",
 						url: `https://gitlab.com/api/v4/users/${element.id}/projects`,
 						headers: {
@@ -292,7 +293,10 @@ exports.getUsersGitQuery = async (req, res) => {
 							Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 						},
 						//Get project details for gitlab user projects
-					}).then((project) => {
+					}))
+				});
+				axios.all(listOfUserProjects).then(axios.spread((...projects) => {
+					projects.forEach((project) => {
 						console.log("Gitlab project", project.id);
 						listOfFetches.push(
 							axios({
@@ -305,8 +309,8 @@ exports.getUsersGitQuery = async (req, res) => {
 								},
 							})
 						);
-					});
-				});
+					})
+				}));
 
 				axios.all(listOfFetches).then(
 					axios.spread((...responseArr) => {
