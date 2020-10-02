@@ -296,7 +296,8 @@ exports.getUsersGitQuery = async (req, res) => {
 					}))
 				});
 				axios.all(listOfUserProjects).then(axios.spread((...projects) => {
-					projects.data.forEach((project) => {
+					console.log(projects)
+					projects.forEach((project) => {
 						console.log("Gitlab project", project);
 						console.log("Gitlab id project", project.id);
 						console.log("Gitlab id owner project", project.owner.id);
