@@ -251,7 +251,7 @@ exports.getUsersGitQuery = async (req, res) => {
 			// }),
 			axios({
 				method: "get",
-				url: `https://gitlab.com/api/v4/users?location=${req.params.query}`,
+				url: `https://gitlab.com/api/v4/users?location=${req.params.query}&&per_page=1000`,
 				headers: {
 					"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
 					"Content-Type": "application/json",
