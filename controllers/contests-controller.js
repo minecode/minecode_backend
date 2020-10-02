@@ -236,21 +236,18 @@ exports.getContentsGithub = async (req, res) => {
 
 exports.getUsersGitQuery = async (req, res) => {
 	setCache(res);
-
-	//Get users in github and gitlab
 	await axios({
 			method: "get",
-			url: `https://api.github.com/search/users?q=location:${req.params.query}`,
+			url: `https://api.github.com/search/users?q=${req.params.query}`,
 			headers: {
 				Authorization: `token ${process.env.TOKEN}`,
 				"Content-Type": "application/json",
 				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 			},
-		}).then((responses) => {
+		})
+		.then((userData) => {
 			let listOfFetches = [];
-			//Get repos for github users
-			responses.data.items.forEach((element) => {
-				console.log("Github user", element.login);
+			userData.data.items.forEach((element) => {
 				listOfFetches.push(
 					axios({
 						method: "get",
@@ -263,21 +260,15 @@ exports.getUsersGitQuery = async (req, res) => {
 					})
 				);
 			});
-			axios.all(listOfFetches).then(
-				axios.spread((...responseArr) => {
-					let responseArrFinal = [];
-					responseArr.forEach((element) => {
-						responseArrFinal = responseArrFinal.concat(
-							element.data.filter((repo) => {
-								return (
-									repo.license != null && repo.license.key == "apache-2.0"
-								);
-							})
-						);
-					});
-					res.send(responseArrFinal);
-				})
-			);
+			axios.all(listOfFetches).then((responseArr) => {
+				let responseArrFinal = [];
+				responseArr.forEach((element) => {
+					responseArrFinal = responseArrFinal.concat(element.data.filter((repo) => {
+						return repo.license != null && repo.license.key == 'apache-2.0'
+					}));
+				});
+				res.send(responseArrFinal);
+			});
 		})
 		.catch((err) => {
 			res.json({
