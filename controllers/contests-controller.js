@@ -236,9 +236,6 @@ exports.getContentsGithub = async (req, res) => {
 
 exports.getUsersGitQuery = async (req, res) => {
 	setCache(res);
-	console.log('TOKEN', process.env.TOKEN)
-	console.log('TOKEN_2', process.env.TOKEN_2)
-
 	await axios.all([axios({
 			method: "get",
 			url: `https://api.github.com/search/users?q=location:${req.params.query}`,
@@ -256,11 +253,10 @@ exports.getUsersGitQuery = async (req, res) => {
 				Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
 			},
 		})])
-		.then((...userData) => {
-			console.log('TOKEN', process.env.TOKEN)
-            console.log(userData[0])
-			console.log('TOKEN_2', process.env.TOKEN_2)
-            console.log(userData[1])
+		.then(axios.spread((...responses) => {
+            console.log(responses[0])
+            console.log(responses[1])
+            // use/access the results 
 			// let listOfFetches = [];
 			// userData.data.items.forEach((element) => {
 			// 	listOfFetches.push(
