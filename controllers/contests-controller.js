@@ -297,11 +297,13 @@ exports.getUsersGitQuery = async (req, res) => {
 				});
 				axios.all(listOfUserProjects).then(axios.spread((...projects) => {
 					projects.forEach((project) => {
-						console.log("Gitlab project", project.id);
+						console.log("Gitlab project", project);
+						console.log("Gitlab id project", project.id);
+						console.log("Gitlab id owner project", project.owner.id);
 						listOfFetches.push(
 							axios({
 								method: "get",
-								url: `https://gitlab.com/api/v4/users/${element.id}/projects/${project.id}`,
+								url: `https://gitlab.com/api/v4/users/${project.owner.id}/projects/${project.id}`,
 								headers: {
 									"PRIVATE-TOKEN": `${process.env.TOKEN_2}`,
 									"Content-Type": "application/json",
