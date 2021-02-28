@@ -25,3 +25,24 @@ exports.getGitUser = async (req, res) => {
             });
         });
 };
+
+exports.getGitRepo = async (req, res) => {
+    setCache(res);
+    await axios({
+            method: "get",
+            url: `https://api.github.com/repos/${req.params.repo}`,
+            headers: {
+                Authorization: `token ${process.env.TOKEN}`,
+                "Content-Type": "application/json",
+                Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+            },
+        })
+        .then((userData) => {
+            res.send(userData.data)
+        })
+        .catch((err) => {
+            res.json({
+                message: `There was an error: ${err}`,
+            });
+        });
+};
