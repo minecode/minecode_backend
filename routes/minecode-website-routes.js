@@ -2,7 +2,7 @@
 const express = require('express')
 
 // Import books-controller
-const contestsRoutes = require('../controllers/contests-controller.js')
+const contestsRoutes = require('../controllers/minecode-website-controller.js')
 
 // Create router
 const router = express.Router()
