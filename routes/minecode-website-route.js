@@ -2,18 +2,20 @@
 const express = require('express')
 
 // Import books-controller
-const contestsRoutes = require('../controllers/minecode-website-controller.js')
+const minecodeWebsiteControllers = require('../controllers/minecode-website-controller.js')
 
 // Create router
 const router = express.Router()
 router.use(function timeLog(req, res, next) {
   next()
 })
-router.get('/github/members', contestsRoutes.getGitMembersOfMinecodeWebsite)
-router.get('/github/issues/closed', contestsRoutes.getGitIssuesClosedOfMinecodeWebsite)
-router.get('/github/issues/:id', contestsRoutes.getGitIssueIdOfMinecodeWebsite)
-router.get('/github/issues/:id/comments', contestsRoutes.getGitIssueIdCommentsOfMinecodeWebsite)
-router.get('/github/labels', contestsRoutes.getGitLabelsOfMinecodeWebsite)
+
+router.get('/members', minecodeWebsiteControllers.getGitMembersOfMinecodeWebsite)
+router.get('/issues/closed', minecodeWebsiteControllers.getGitIssuesClosedOfMinecodeWebsite)
+router.get('/issues/open/bug', minecodeWebsiteControllers.getGitIssuesOpenBugOfMinecodeWebsite)
+router.get('/issues/:id', minecodeWebsiteControllers.getGitIssueIdOfMinecodeWebsite)
+router.get('/issues/:id/comments', minecodeWebsiteControllers.getGitIssueIdCommentsOfMinecodeWebsite)
+router.get('/labels', minecodeWebsiteControllers.getGitLabelsOfMinecodeWebsite)
 
 // Export router
 module.exports = router
