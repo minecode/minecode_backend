@@ -7,6 +7,7 @@ const helmet = require('helmet')
 
 // Import routes
 const contestsRoutes = require('./routes/contests-route')
+const minecodeRoutes = require('./routes/minecode-website-route')
 
 // Set default port for express app
 const PORT = process.env.PORT || 4001
@@ -24,6 +25,7 @@ app.use(bodyParser.json())
 
 // Implement books route
 app.use('/v1', contestsRoutes)
+app.use('/minecode', contestsRoutes)
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {
