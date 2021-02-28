@@ -5,11 +5,32 @@ function setCache(response) {
     response.set("Cache-Control", "public, max-age=300, s-maxage=600");
 }
 
+exports.getGitReleasesOfMinecode = async (req, res) => {
+    setCache(res);
+    await axios({
+            method: "get",
+            url: `https://api.github.com/repos/minecode/${req.params.app}/milestones`,
+            headers: {
+                Authorization: `token ${process.env.TOKEN}`,
+                "Content-Type": "application/json",
+                Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
+            },
+        })
+        .then((userData) => {
+            res.send(userData.data)
+        })
+        .catch((err) => {
+            res.json({
+                message: `There was an error: ${err}`,
+            });
+        });
+};
+
 exports.getGitReleaseVersionOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/website/milestones/${req.params.version}`,
+            url: `https://api.github.com/repos/minecode/${req.params.app}/milestones/${req.params.version}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -30,7 +51,7 @@ exports.getGitIssuesOfReleaseVersionOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/website/issues?milestone=${req.params.version}`,
+            url: `https://api.github.com/repos/minecode/${req.params.app}/issues?milestone=${req.params.version}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -51,7 +72,7 @@ exports.getGitIssuesClosedOfReleaseVersionOfOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/website/issues?state=closed&milestone=${req.params.version}`,
+            url: `https://api.github.com/repos/minecode/${req.params.app}/issues?state=closed&milestone=${req.params.version}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
