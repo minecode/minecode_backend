@@ -25,7 +25,7 @@ app.use(bodyParser.json())
 
 // Implement books route
 app.use('/v1', contestsRoutes)
-app.use('/minecode', contestsRoutes)
+app.use('/minecode', minecodeRoutes)
 
 // Implement 500 error route
 app.use(function (err, req, res, next) {
