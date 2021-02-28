@@ -11,6 +11,7 @@ router.use(function timeLog(req, res, next) {
 })
 
 router.get('/:app/milestones', minecodeControllers.getGitReleasesOfMinecode)
+router.get('/:app/milestones/close', minecodeControllers.getGitReleasesClosedOfMinecode)
 
 router.get('/:app/milestones/:version', minecodeControllers.getGitReleaseVersionOfMinecode)
 router.get('/:app/milestones/:version/issues', minecodeControllers.getGitIssuesOfReleaseVersionOfMinecode)
