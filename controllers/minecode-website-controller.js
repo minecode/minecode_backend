@@ -74,7 +74,7 @@ exports.getGitIssuesClosedOfMinecodeWebsite = async (req, res) => {
             method: "get",
             url: `https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed`,
             headers: {
-                Authorization: `token ${process.env.TOKEN}`,
+                Authorization: `bearer ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
                 Accept: "application/vnd.github.mercy-preview+json", // MUST ADD TO INCLUDE TOPICS
             },
