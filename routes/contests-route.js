@@ -10,7 +10,7 @@ router.use(function timeLog(req, res, next) {
   next()
 })
 router.get('/github/repos/location/:location', contestsControllers.getGitReposByLocation)
-router.get('/github/contributors/repo/:user/:repo', contestsControllers.getContributorsByRepo)
+router.get('/github/repos/:user/:repo/contributors', contestsControllers.getContributorsByRepo)
 
 // Export router
 module.exports = router
