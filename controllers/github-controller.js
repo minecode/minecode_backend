@@ -30,7 +30,7 @@ exports.getGitRepo = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.repo}`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
