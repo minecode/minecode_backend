@@ -9,7 +9,7 @@ exports.getGitReleasesOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.app}/milestones`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/milestones`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -30,7 +30,7 @@ exports.getGitReleasesClosedOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.app}/milestones?state=close`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/milestones?state=close`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@ exports.getGitReleaseVersionOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.app}/milestones/${req.params.version}`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/milestones/${req.params.version}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -72,7 +72,7 @@ exports.getGitIssuesOfReleaseVersionOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.app}/issues?milestone=${req.params.version}`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/issues?milestone=${req.params.version}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -93,7 +93,7 @@ exports.getGitIssuesClosedOfReleaseVersionOfOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.app}/issues?state=closed&milestone=${req.params.version}`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/issues?state=closed&milestone=${req.params.version}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -114,7 +114,7 @@ exports.getGitAppOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.name}`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -135,7 +135,7 @@ exports.getGitAppMilestonesOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.name}/milestones`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/milestones`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -156,7 +156,7 @@ exports.getGitAppMilestonesClosedOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.name}/milestones?state=close`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/milestones?state=close`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -177,7 +177,7 @@ exports.getGitAppContributorsOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.name}/contributors`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/contributors`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -198,7 +198,7 @@ exports.getGitAppContentsOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.name}/contents/minecode_settings.json?ref=master`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/contents/minecode_settings.json?ref=master`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -219,7 +219,7 @@ exports.getGitAppContentImageOfMinecode = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/${req.params.name}/contents/${req.params.image}?ref=master`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/contents/${req.params.image}?ref=master`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
