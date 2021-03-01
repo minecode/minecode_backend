@@ -10,8 +10,8 @@ router.use(function timeLog(req, res, next) {
   next()
 })
 
-router.get('/user/:login', githubControllers.getGitUser)
-router.get('/repo/:repo', githubControllers.getGitRepo)
+router.get('/users/:login', githubControllers.getGitUser)
+router.get('/repos/:user/:repo', githubControllers.getGitRepo)
 
 // Export router
 module.exports = router
