@@ -9,7 +9,7 @@ exports.getGitMembersOfMinecodeWebsite = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/orgs/minecode/members`,
+            url: `https://api.github.com/orgs/${req.params.org}/members`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -30,7 +30,7 @@ exports.getGitIssueIdOfMinecodeWebsite = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/minecode.github.io/issues/${req.params.id}`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/issues/${req.params.id}`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -51,7 +51,7 @@ exports.getGitIssueIdCommentsOfMinecodeWebsite = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/minecode.github.io/issues/${req.params.id}/comments`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/issues/${req.params.id}/comments`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -72,7 +72,7 @@ exports.getGitIssuesClosedOfMinecodeWebsite = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/minecode.github.io/issues?state=closed`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/issues?state=closed`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -93,7 +93,7 @@ exports.getGitIssuesOpenBugOfMinecodeWebsite = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/minecode.github.io/issues?state=open&label=bug`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/issues?state=open&label=bug`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
@@ -114,7 +114,7 @@ exports.getGitLabelsOfMinecodeWebsite = async (req, res) => {
     setCache(res);
     await axios({
             method: "get",
-            url: `https://api.github.com/repos/minecode/minecode.github.io/labels`,
+            url: `https://api.github.com/repos/${req.params.user}/${req.params.repo}/labels`,
             headers: {
                 Authorization: `token ${process.env.TOKEN}`,
                 "Content-Type": "application/json",
