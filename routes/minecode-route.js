@@ -10,19 +10,19 @@ router.use(function timeLog(req, res, next) {
   next()
 })
 
-router.get('/:app/milestones', minecodeControllers.getGitReleasesOfMinecode)
-router.get('/:app/milestones/close', minecodeControllers.getGitReleasesClosedOfMinecode)
+router.get('/repos/:user/:repo/milestones', minecodeControllers.getGitReleasesOfMinecode)
+router.get('/repos/:user/:repo/milestones/closed', minecodeControllers.getGitReleasesClosedOfMinecode)
 
-router.get('/:app/milestones/:version', minecodeControllers.getGitReleaseVersionOfMinecode)
-router.get('/:app/milestones/:version/issues', minecodeControllers.getGitIssuesOfReleaseVersionOfMinecode)
-router.get('/:app/milestones/:version/issues/closed', minecodeControllers.getGitIssuesClosedOfReleaseVersionOfOfMinecode)
+router.get('/repos/:user/:repo/milestones/:version', minecodeControllers.getGitReleaseVersionOfMinecode)
+router.get('/repos/:user/:repo/milestones/:version/issues', minecodeControllers.getGitIssuesOfReleaseVersionOfMinecode)
+router.get('/repos/:user/:repo/milestones/:version/issues/closed', minecodeControllers.getGitIssuesClosedOfReleaseVersionOfOfMinecode)
 
-router.get('/app/:name', minecodeControllers.getGitAppOfMinecode)
-router.get('/app/:name/milestones', minecodeControllers.getGitAppMilestonesOfMinecode)
-router.get('/app/:name/milestones/closed', minecodeControllers.getGitAppMilestonesClosedOfMinecode)
-router.get('/app/:name/contributors', minecodeControllers.getGitAppContributorsOfMinecode)
-router.get('/app/:name/contents', minecodeControllers.getGitAppContentsOfMinecode)
-router.get('/app/:name/contents/image/:image', minecodeControllers.getGitAppContentImageOfMinecode)
+router.get('/repos/:user/:repo', minecodeControllers.getGitAppOfMinecode)
+router.get('/repos/:user/:repo/milestones', minecodeControllers.getGitAppMilestonesOfMinecode)
+router.get('/repos/:user/:repo/milestones/closed', minecodeControllers.getGitAppMilestonesClosedOfMinecode)
+router.get('/repos/:user/:repo/contributors', minecodeControllers.getGitAppContributorsOfMinecode)
+router.get('/repos/:user/:repo/contents', minecodeControllers.getGitAppContentsOfMinecode)
+router.get('/repos/:user/:repo/contents/:image', minecodeControllers.getGitAppContentImageOfMinecode)
 
 // Export router
 module.exports = router
