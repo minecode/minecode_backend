@@ -10,12 +10,12 @@ router.use(function timeLog(req, res, next) {
   next()
 })
 
-router.get('/members', minecodeWebsiteControllers.getGitMembersOfMinecodeWebsite)
-router.get('/issues/closed', minecodeWebsiteControllers.getGitIssuesClosedOfMinecodeWebsite)
-router.get('/issues/open/bug', minecodeWebsiteControllers.getGitIssuesOpenBugOfMinecodeWebsite)
-router.get('/issues/:id', minecodeWebsiteControllers.getGitIssueIdOfMinecodeWebsite)
-router.get('/issues/:id/comments', minecodeWebsiteControllers.getGitIssueIdCommentsOfMinecodeWebsite)
-router.get('/labels', minecodeWebsiteControllers.getGitLabelsOfMinecodeWebsite)
+router.get('/orgs/:org/members', minecodeWebsiteControllers.getGitMembersOfMinecodeWebsite)
+router.get('/repos/:user/:repo/issues/closed', minecodeWebsiteControllers.getGitIssuesClosedOfMinecodeWebsite)
+router.get('/repos/:user/:repo/issues/open/bug', minecodeWebsiteControllers.getGitIssuesOpenBugOfMinecodeWebsite)
+router.get('/repos/:user/:repo/issues/:id', minecodeWebsiteControllers.getGitIssueIdOfMinecodeWebsite)
+router.get('/repos/:user/:repo/issues/:id/comments', minecodeWebsiteControllers.getGitIssueIdCommentsOfMinecodeWebsite)
+router.get('/repos/:user/:repo/labels', minecodeWebsiteControllers.getGitLabelsOfMinecodeWebsite)
 
 // Export router
 module.exports = router
